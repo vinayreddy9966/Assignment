@@ -1,0 +1,30 @@
+
+<form>
+    <input [formControl]="nameControl" type="text" placeholder="Enter Name">
+    <input [formControl]="dateControl" type="text" placeholder="Enter Date">
+    <button [disabled]="isLoading" (click)="search()">Search</button>
+</form>
+<table style="border: 1px solid black">
+    <tr>
+        <th style="border: 1px solid black">Id</th>
+        <th style="border: 1px solid black">Name</th>
+        <th style="border: 1px solid black">Birth Date</th>
+        <th style="border: 1px solid black">Gender</th>
+    </tr>
+    <tr style="border: 1px solid black" *ngFor="let row of patients">
+        <td style="border: 1px solid black">{{row.resource.id}}</td>
+        <td style="border: 1px solid black">
+            <span *ngIf="row.resource.name.length > 0 && row.resource.name[0].text">
+                {{row.resource.name[0].text}}
+            </span>
+            <span *ngIf="row.resource.name.length > 0 && row.resource.name[0].family && !row.resource.name[0].text">
+                {{row.resource.name[0].family}}
+            </span>
+        </td>
+        <td style="border: 1px solid black">{{row.resource.birthDate}}</td>
+        <td style="border: 1px solid black">{{row.resource.gender}}</td>
+    </tr>
+</table>
+<br>
+<div>No Of Records: {{patients.length}}</div>
+<div *ngIf="responseTime">{{responseTime | responseTimeFormat}}</div>
